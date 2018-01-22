@@ -40,6 +40,7 @@ public class CoinTest1 extends junit.framework.TestCase {
 	/**
 	 * Test the equals method.
 	 */
+	@Test(timeout=100)
 	public void testEquals() {
 		String currency = "Baht";
 		Coin coin1 = new Coin(10, currency);
@@ -64,7 +65,7 @@ public class CoinTest1 extends junit.framework.TestCase {
 	/**
 	 * test that compareTo orders coins by increasing value
 	 */
-	/* @Test(timeout=100) */
+	@Test(timeout=100)
 	public void testCompareTo() {
 		String currency = "USD";
 		Coin coin1 = new Coin(1, currency);
@@ -80,10 +81,24 @@ public class CoinTest1 extends junit.framework.TestCase {
 		assertTrue( coin1.compareTo(max) < 0 );
 		assertTrue( max.compareTo(coin1) > 0 );
 	}
-
+	
+	@Test(timeout=100)
+	public void testCompareToUsesDouble() {
+		String currency = "Baht";
+		Coin coin1 = new Coin(0.1, currency);
+		Coin coin2 = new Coin(0.2, currency);
+		assertTrue( "0.1Baht < 0.2Baht", coin1.compareTo(coin2) < 0);
+		assertTrue( "0.2Baht > 0.1Baht", coin2.compareTo(coin1) > 0);
+		coin1 = new Coin(0.99, currency);
+		coin2 = new Coin(1.00, currency);
+		assertTrue( "0.99Baht < 1.0Baht", coin1.compareTo(coin2) < 0);
+		assertTrue( "1.0Baht > 0.99Baht", coin2.compareTo(coin1) > 0);
+	}
+		
 	/**
 	 * Test that toString() contains the value of the coin
 	 */
+	@Test(timeout=100)
 	public void testToString() {
 	    Coin coin = new Coin(123, "Rupee");
 	    String s = coin.toString();
